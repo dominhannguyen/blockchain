@@ -85,7 +85,6 @@ export const connect = () => {
               smartContract: SmartContractObj,
               smartContractRocket: SmartContractObjRocket,
               web3: web3,
-              helloWorld: "hello",
             })
           );
           // Add listeners start
