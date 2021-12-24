@@ -15,6 +15,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract NFT_Rocket_Elevators_Full_Flat is ERC721Enumerable, Ownable {
   using Strings for uint256;
   string public baseURI;
@@ -25,8 +26,8 @@ contract NFT_Rocket_Elevators_Full_Flat is ERC721Enumerable, Ownable {
   uint256 public maxSupply = 1000;
   uint256 public maxMintAmount = 10;
   uint256 public nftPerAddressLimit = 3;
-  uint256 public NFTRocketCost = 10000000000000000;
-  uint256 public discountNFTRocketCost = 5000000000000000;
+  uint256 public NFTRocketCost = 100000;
+  uint256 public discountNFTRocketCost = 50000;
   bool public paused = false;
   bool public revealed = false;
   string public rocketTokenAddress = "0x3b8F02Aa259f1c55fC2afaFF9cC3695074Ff80EB";
@@ -198,12 +199,13 @@ contract NFT_Rocket_Elevators_Full_Flat is ERC721Enumerable, Ownable {
       uint256 supply = totalSupply();
       IERC20 rocketToken = IERC20(0x3b8F02Aa259f1c55fC2afaFF9cC3695074Ff80EB);
       uint accountBalance = rocketToken.balanceOf(msg.sender);
-      require(isWhitelisted(msg.sender), "address is not whitelisted");
+      
       
       uint256 ownerMintedCount = addressMintedBalance[msg.sender];
       require(ownerMintedCount + _mintAmount <= nftPerAddressLimit, "max NFT per address exceeded");
       if(msg.sender != owner()){
           if(block.timestamp <= saleStart){
+              require(isWhitelisted(msg.sender), "address is not whitelisted");
               require(accountBalance >= discountNFTRocketCost * _mintAmount);
               rocketToken.transferFrom(msg.sender, address(this), discountNFTRocketCost * _mintAmount);
           } else if (block.timestamp <= saleEnd){
