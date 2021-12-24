@@ -34,21 +34,13 @@ const updateAccountRequest = (payload) => {
 export const connect = () => {
   return async (dispatch) => {
     dispatch(connectRequest());
-    const abiResponse = await fetch("/config/abi.json", {
+    const abiResponse = await fetch("/config/abiRocket.json", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
     });
     const abi = await abiResponse.json();
-
-    const abiResponseRocket = await fetch("/config/abiRocket.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-    const abiRocket = await abiResponseRocket.json();
     const configResponse = await fetch("/config/config.json", {
       headers: {
         "Content-Type": "application/json",
@@ -73,19 +65,11 @@ export const connect = () => {
             abi,
             CONFIG.CONTRACT_ADDRESS
           );
-
-          const SmartContractObjRocket = new Web3EthContract(
-            abiRocket,
-            CONFIG.CONTRACT_ADDRESS_ROCKET
-          );
-
           dispatch(
             connectSuccess({
               account: accounts[0],
               smartContract: SmartContractObj,
-              smartContractRocket: SmartContractObjRocket,
               web3: web3,
-              helloWorld: "hello",
             })
           );
           // Add listeners start

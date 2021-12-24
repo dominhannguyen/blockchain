@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "./redux/blockchain/blockchainActions";
+
 import { fetchData } from "./redux/data/dataActions";
 import * as s from "./styles/globalStyles";
 import styled from "styled-components";
@@ -103,6 +104,7 @@ function App() {
   const [mintAmount, setMintAmount] = useState(1);
   const [CONFIG, SET_CONFIG] = useState({
     CONTRACT_ADDRESS: "",
+    CONTRACT_ADDRESS_ROCKET: "",
     SCAN_LINK: "",
     NETWORK: {
       NAME: "",
@@ -127,6 +129,7 @@ function App() {
     let totalGasLimit = String(gasLimit * mintAmount);
     console.log("Cost: ", totalCostWei);
     console.log("Gas limit: ", totalGasLimit);
+    console.log(blockchain);
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
     blockchain.smartContract.methods
@@ -151,6 +154,51 @@ function App() {
         dispatch(fetchData(blockchain.account));
       });
   };
+
+
+
+  const claimRocket = () => {
+    let cost = CONFIG.WEI_COST;
+    let gasLimit = CONFIG.GAS_LIMIT;
+    let totalCostWei = String(cost * mintAmount);
+    let totalGasLimit = String(gasLimit * mintAmount);
+    console.log("Cost: ", totalCostWei);
+    console.log("Gas limit: ", totalGasLimit);
+    setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
+    setClaimingNft(true);
+    console.log(blockchain);
+    blockchain.smartContractRocket.methods
+      .approve(CONFIG.CONTRACT_ADDRESS, 1000000000000000).send({
+        gasLimit: String(totalGasLimit),
+        to: CONFIG.CONTRACT_ADDRESS_ROCKET,
+        from: blockchain.account,
+      }).then((receipt) => {
+        console.log(receipt);
+        blockchain.smartContract.methods
+            .mintWithRocketToken(mintAmount)
+            .send({
+                gasLimit: String(totalGasLimit),
+                to: CONFIG.CONTRACT_ADDRESS,
+                from: blockchain.account,
+            })
+            .once("error", (err) => {
+                console.log(err);
+                setFeedback("Sorry, something went wrong please try again later.");
+                setClaimingNft(false);
+            })
+            .then((receipt) => {
+                console.log(receipt);
+                setFeedback(
+                    `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+                );
+                setClaimingNft(false);
+                dispatch(fetchData(blockchain.account));
+            });
+    
+      })
+      
+  };
+
 
   const decrementMintAmount = () => {
     let newMintAmount = mintAmount - 1;
@@ -360,7 +408,17 @@ function App() {
                           getData();
                         }}
                       >
-                        {claimingNft ? "BUSY" : "BUY"}
+                        {claimingNft ? "BUSY" : "BUY WITH ETH"}
+                      </StyledButton>
+                      <StyledButton
+                        disabled={claimingNft ? 1 : 0}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          claimRocket();
+                          getData();
+                        }}
+                      >
+                        {claimingNft ? "BUSY" : "BUY ROCKET TOKEN"}
                       </StyledButton>
                     </s.Container>
                   </>
