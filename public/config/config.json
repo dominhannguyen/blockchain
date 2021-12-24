@@ -1,18 +1,18 @@
 {
-  "CONTRACT_ADDRESS": "0x827acb09a2dc20e39c9aad7f7190d9bc53534192",
-  "SCAN_LINK": "https://polygonscan.com/token/0x827acb09a2dc20e39c9aad7f7190d9bc53534192",
+  "CONTRACT_ADDRESS": "0x7eE0c5dD42D14A5C36c4A874EFE9CAf2cb2a0254",
+  "SCAN_LINK": "https://polygonscan.com/token/0x1F2215EB06Ae0d3B0615F64a7f8416Ef3fE66673",
   "NETWORK": {
-    "NAME": "Polygon",
-    "SYMBOL": "Matic",
-    "ID": 137
+    "NAME": "Rinkeby",
+    "SYMBOL": "Ether",
+    "ID": 4
   },
-  "NFT_NAME": "Nerdy Coder Clones",
-  "SYMBOL": "NCC",
+  "NFT_NAME": "Rocket Elevator Artwork",
+  "SYMBOL": "REA",
   "MAX_SUPPLY": 1000,
-  "WEI_COST": 75000000000000000,
-  "DISPLAY_COST": 0.075,
-  "GAS_LIMIT": 285000,
+  "WEI_COST": 10000000000000000,
+  "DISPLAY_COST": 0.01,
+  "GAS_LIMIT": 3000000,
   "MARKETPLACE": "Opeansea",
-  "MARKETPLACE_LINK": "https://opensea.io/collection/nerdy-coder-clones",
+  "MARKETPLACE_LINK": "https://opensea.io/collection/",
   "SHOW_BACKGROUND": true
 }

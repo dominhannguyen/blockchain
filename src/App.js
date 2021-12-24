@@ -205,7 +205,7 @@ function App() {
         <s.SpacerSmall />
         <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
           <s.Container flex={1} jc={"center"} ai={"center"}>
-            <StyledImg alt={"example"} src={"/config/images/example.gif"} />
+            <StyledImg alt={"example"} src={"/config/images/example.png"} />
           </s.Container>
           <s.SpacerLarge />
           <s.Container
@@ -321,7 +321,7 @@ function App() {
                     <s.SpacerMedium />
                     <s.Container ai={"center"} jc={"center"} fd={"row"}>
                       <StyledRoundButton
-                        style={{ lineHeight: 0.4 }}
+                        
                         disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
@@ -373,7 +373,7 @@ function App() {
           <s.Container flex={1} jc={"center"} ai={"center"}>
             <StyledImg
               alt={"example"}
-              src={"/config/images/example.gif"}
+              src={"/config/images/example.png"}
               style={{ transform: "scaleX(-1)" }}
             />
           </s.Container>
